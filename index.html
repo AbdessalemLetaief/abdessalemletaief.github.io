@@ -197,6 +197,14 @@
         -webkit-backdrop-filter: blur(1.5px);
         z-index: -1;
       }
+
+      .map-container {
+        position: relative;
+        width: 100%;
+        padding-top: 120%;
+        min-height: 300px;
+        margin: 24px 0;
+      }
     }
 
     @keyframes float {
@@ -512,13 +520,8 @@
     }
 
     .location-content {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 40px;
-      align-items: start;
+      display: block;
+      padding: 0 5px;
     }
 
     .location-info {
@@ -544,12 +547,16 @@
 
     .map-container {
       position: relative;
-      padding-top: 75%;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 aspect ratio for desktop */
+      min-height: 300px;
+      margin: 24px 0;
+      grid-column: auto;
+      grid-row: auto;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      grid-column: 2;
-      grid-row: 1 / span 2;
     }
 
     .map-container iframe {
