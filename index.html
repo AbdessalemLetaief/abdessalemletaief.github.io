@@ -64,6 +64,9 @@
       height: auto;
       animation: float 10s infinite linear;
       z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.4,0,.2,1);
     }
 
     .olive.top-left {
@@ -91,6 +94,23 @@
       animation: float 10s infinite linear;
     }
 
+    .olive.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .olive.left-middle, .olive.right-middle {
+      position: absolute;
+      top: 50%;
+      width: 600px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(-50%);
+      transition: opacity 1.2s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .olive.left-middle { left: 0; }
+    .olive.right-middle { right: 0; }
+
     @media screen and (max-width: 768px) {
       .olive.top-left {
         width: 600px;
@@ -106,6 +126,10 @@
 
       .olive.bottom-right {
         width: 600px;
+      }
+
+      .olive.left-middle, .olive.right-middle {
+        width: 350px;
       }
 
       .parallax {
@@ -155,6 +179,10 @@
 
       .olive.bottom-right {
         width: 350px;
+      }
+
+      .olive.left-middle, .olive.right-middle {
+        width: 180px;
       }
 
       .parallax {
@@ -307,6 +335,13 @@
       background: transparent;
       z-index: 1000;
       transform: translateZ(0);
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1.2s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .title-section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .title-section h1 {
@@ -336,7 +371,14 @@
       z-index: 1000;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 32px rgba(42, 77, 47, 0.18), 0 1.5px 8px rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: translateY(-40px);
+      transition: opacity 1.2s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .nav-menu.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .nav-menu ul {
@@ -611,68 +653,105 @@
     }
 
     .activity-card {
-      background: rgba(255, 255, 255, 0.9);
+      background: #fff;
+      border: 1.5px solid #f0e6e0;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(42,77,47,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      min-height: 320px;
+      transition: box-shadow 0.3s;
+      position: relative;
+      overflow: visible;
+      height: auto;
       padding: 0;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      overflow: hidden;
     }
 
-    .activity-card:hover {
-      transform: translateY(-5px);
+    .activity-image-container {
+      width: 100%;
+      height: 38%;
+      min-height: 80px;
+      max-height: 160px;
+      overflow: hidden;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
     }
 
     .activity-image {
       width: 100%;
-      height: 200px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 15px 15px 0 0;
+      display: block;
+      border-radius: 0;
+      margin: 0;
+      box-shadow: none;
     }
 
     .activity-content {
-      padding: 25px;
+      flex: 1;
+      padding: 24px 18px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
     .activity-card h3 {
       color: #2a4d2f;
-      margin-bottom: 15px;
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.5px;
     }
 
-    .activity-card p {
+    .activity-card .activity-question {
       color: #3a5d3f;
-      margin: 10px 0;
-      font-size: 1.2rem;
-      line-height: 1.8;
+      font-size: 1.05rem;
+      margin: 0 0 10px 0;
+    }
+
+    .activity-card .activity-answer {
+      opacity: 0;
+      max-height: 0;
+      transition: opacity 0.4s, max-height 0.4s;
+      color: #b97c5a;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .activity-card:hover .activity-answer,
+    .activity-card:focus-within .activity-answer {
+      opacity: 1;
+      max-height: 100px;
     }
 
     @media screen and (max-width: 768px) {
-      .section-divider {
-        height: 120px;
+      .activity-card {
+        min-height: 220px;
       }
-
-      .activity-image {
-        height: 180px;
+      .activity-image-container {
+        min-height: 60px;
+        max-height: 100px;
       }
-
       .activity-content {
-        padding: 20px;
+        padding: 14px 6px 10px 6px;
       }
     }
-
     @media screen and (max-width: 480px) {
-      .section-divider {
-        height: 80px;
+      .activity-card {
+        min-height: 160px;
       }
-
-      .activity-image {
-        height: 160px;
+      .activity-image-container {
+        min-height: 40px;
+        max-height: 60px;
       }
-
       .activity-content {
-        padding: 15px;
+        padding: 8px 2px 6px 2px;
       }
     }
 
@@ -807,6 +886,99 @@
         display: none;
       }
     }
+
+    /* Scroll to Top Button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 100px;
+      left: 30px;
+      z-index: 3000;
+      background: #4a7c4d;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, background 0.2s;
+    }
+    #scrollTopBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #scrollTopBtn:hover {
+      background: #295c36;
+    }
+    @media screen and (max-width: 480px) {
+      #scrollTopBtn {
+        bottom: 70px;
+        left: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        z-index: 3000;
+      }
+    }
+
+    .olive-middle {
+      position: absolute;
+      opacity: 0.8;
+      z-index: 10;
+      height: auto;
+      transition: opacity 1.2s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.4,0,.2,1);
+      /* Default state: hidden and slightly shifted down */
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .section.visible .olive-middle {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .olive-middle-left {
+      left: 0;
+      bottom: 0;
+      top: auto;
+      max-width: 1600px;
+      width: 120vw;
+      transform: none;
+      transition-delay: 0.8s;
+    }
+    .olive-middle-right {
+      right: 0;
+      bottom: 0;
+      top: auto;
+      max-width: 1200px;
+      width: 100vw;
+      transform: none;
+      transition-delay: 1.2s;
+    }
+    @media screen and (max-width: 768px) {
+      .olive-middle-left {
+        max-width: 800px;
+        width: 140vw;
+      }
+      .olive-middle-right {
+        max-width: 600px;
+        width: 120vw;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .olive-middle-left {
+        max-width: 400px;
+        width: 180vw;
+      }
+      .olive-middle-right {
+        max-width: 300px;
+        width: 160vw;
+      }
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -884,6 +1056,41 @@
           img.style.transform = 'translateX(' + offset + 'px)';
         });
       });
+
+      // Scroll to Top Button
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+      const landing = document.getElementById('home');
+
+      function checkScrollBtn() {
+        // Show button if scrolled past the bottom of the landing page
+        const landingRect = landing.getBoundingClientRect();
+        if (landingRect.bottom < 0) {
+          scrollTopBtn.classList.add('show');
+        } else {
+          scrollTopBtn.classList.remove('show');
+        }
+      }
+
+      window.addEventListener('scroll', checkScrollBtn);
+      checkScrollBtn();
+
+      scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      setTimeout(function() {
+        document.querySelector('.title-section').classList.add('visible');
+        setTimeout(function() {
+          document.querySelectorAll('.olive').forEach(function(img, i) {
+            setTimeout(function() {
+              img.classList.add('visible');
+            }, i * 200);
+          });
+          setTimeout(function() {
+            document.querySelector('.nav-menu').classList.add('visible');
+          }, 600);
+        }, 700);
+      }, 300);
     });
   </script>
 </head>
@@ -932,6 +1139,7 @@
   </div>
 
   <div class="section" id="story">
+    <img src="leftMiddle.png" class="olive-middle olive-middle-left" alt="Decorative olive left" />
     <h2>Our Story</h2>
     <div class="story-content">
       <p class="story-text">In the heart of Tunisia, our paths crossed in a moment that would change our lives forever. What started as a chance encounter blossomed into a beautiful journey of love, laughter, and shared dreams.</p>
@@ -945,6 +1153,7 @@
   </div>
 
   <div class="section" id="details">
+    <img src="rightMiddle.png" class="olive-middle olive-middle-right" alt="Decorative olive right" />
     <h2>Wedding Details</h2>
     <div class="details-content">
       <div class="detail-item">
@@ -965,6 +1174,7 @@
   </div>
 
   <div class="section" id="location">
+    <img src="leftMiddle.png" class="olive-middle olive-middle-left" alt="Decorative olive left" />
     <h2>Location</h2>
     <div class="location-content">
       <div class="location-info">
@@ -995,46 +1205,64 @@
   <div class="section" id="activities">
     <h2>Explore Tunisia</h2>
     <div class="activities-grid">
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1591456983933-0c264720bcd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ancient Ruins" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1591456983933-0c264720bcd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ancient Ruins" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-landmark"></i></span>Ancient Ruins</h3>
-          <p>Visit the UNESCO World Heritage site of Carthage, where ancient Roman ruins tell stories of a bygone era. Don't miss the impressive amphitheater and the Antonine Baths.</p>
+          <h3>Ancient Ruins</h3>
+          <p class="activity-question">Visit the UNESCO World Heritage site of Carthage, where ancient Roman ruins tell stories of a bygone era. Don't miss the impressive amphitheater and the Antonine Baths.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Medina of Tunis" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Medina of Tunis" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-map"></i></span>Medina of Tunis</h3>
-          <p>Explore the historic heart of Tunis, a maze of narrow streets filled with traditional souks, mosques, and beautiful architecture. Perfect for finding unique souvenirs.</p>
+          <h3>Medina of Tunis</h3>
+          <p class="activity-question">Explore the historic heart of Tunis, a maze of narrow streets filled with traditional souks, mosques, and beautiful architecture. Perfect for finding unique souvenirs.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Beach Paradise" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Beach Paradise" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-umbrella-beach"></i></span>Beach Paradise</h3>
-          <p>Relax on the beautiful beaches of Sousse and Hammamet, known for their crystal-clear waters and golden sands. Perfect for a day of sunbathing and swimming.</p>
+          <h3>Beach Paradise</h3>
+          <p class="activity-question">Relax on the beautiful beaches of Sousse and Hammamet, known for their crystal-clear waters and golden sands. Perfect for a day of sunbathing and swimming.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1547471080-7cc2caa0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Desert Adventure" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1547471080-7cc2caa0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Desert Adventure" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-camel"></i></span>Desert Adventure</h3>
-          <p>Take a day trip to the Sahara Desert, where you can experience camel rides, traditional Berber villages, and breathtaking desert landscapes.</p>
+          <h3>Desert Adventure</h3>
+          <p class="activity-question">Take a day trip to the Sahara Desert, where you can experience camel rides, traditional Berber villages, and breathtaking desert landscapes.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Local Cuisine" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Local Cuisine" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-utensils"></i></span>Local Cuisine</h3>
-          <p>Indulge in authentic Tunisian cuisine, from couscous and brik to fresh seafood. Don't forget to try the famous mint tea and local pastries.</p>
+          <h3>Local Cuisine</h3>
+          <p class="activity-question">Indulge in authentic Tunisian cuisine, from couscous and brik to fresh seafood. Don't forget to try the famous mint tea and local pastries.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
-      <div class="activity-card">
-        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Spa & Wellness" class="activity-image">
+      <div class="activity-card" tabindex="0">
+        <div class="activity-image-container">
+          <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Spa & Wellness" class="activity-image">
+        </div>
         <div class="activity-content">
-          <h3><span class="fa-icon"><i class="fas fa-spa"></i></span>Spa & Wellness</h3>
-          <p>Experience traditional hammams and spa treatments, perfect for relaxation after exploring the country's many attractions.</p>
+          <h3>Spa & Wellness</h3>
+          <p class="activity-question">Experience traditional hammams and spa treatments, perfect for relaxation after exploring the country's many attractions.</p>
+          <div class="activity-answer">Take the TGM train from Tunis to Carthage Hannibal station, then walk 10 minutes to the ruins.</div>
         </div>
       </div>
     </div>
@@ -1044,6 +1272,11 @@
   <audio id="bg-music" src="Halfaouine.mp3" loop></audio>
   <button id="music-toggle" aria-label="Toggle music">
     <span id="music-icon"><i class="fas fa-volume-up"></i></span>
+  </button>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
   </button>
 </body>
 </html>
