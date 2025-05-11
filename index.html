@@ -198,12 +198,18 @@
         z-index: -1;
       }
 
+      .location-content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+      }
       .map-container {
-        position: relative;
         width: 100%;
-        padding-top: 120%;
         min-height: 300px;
+        padding-top: 60vw;
         margin: 24px 0;
+        position: relative;
       }
     }
 
@@ -750,6 +756,38 @@
         background-attachment: initial !important;
       }
     }
+
+    .save-the-date-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin: 32px 0 24px 0;
+    }
+    .save-the-date-message {
+      font-size: 2rem;
+      font-family: 'Playfair Display', serif;
+      color: #2a4d2f;
+      font-weight: 700;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .save-the-date-separator {
+      font-size: 2.2rem;
+      color: #b2bfae;
+      font-weight: 700;
+      margin: 0 8px;
+      user-select: none;
+    }
+    @media screen and (max-width: 600px) {
+      .save-the-date-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .save-the-date-separator {
+        display: none;
+      }
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -850,22 +888,26 @@
       <p>October 5, 2025</p>
     </div>
   </div>
-  <div class="countdown">
-    <div class="countdown-item">
-      <div class="countdown-number" id="days">0</div>
-      <div class="countdown-label">Days</div>
-    </div>
-    <div class="countdown-item">
-      <div class="countdown-number" id="hours">0</div>
-      <div class="countdown-label">Hours</div>
-    </div>
-    <div class="countdown-item">
-      <div class="countdown-number" id="minutes">0</div>
-      <div class="countdown-label">Minutes</div>
-    </div>
-    <div class="countdown-item">
-      <div class="countdown-number" id="seconds">0</div>
-      <div class="countdown-label">Seconds</div>
+  <div class="save-the-date-container">
+    <span class="save-the-date-message">Save the Date</span>
+    <span class="save-the-date-separator">|</span>
+    <div class="countdown">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">0</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">0</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">0</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="seconds">0</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
     </div>
   </div>
 
@@ -983,84 +1025,5 @@
   <button id="music-toggle" aria-label="Toggle music">
     <span id="music-icon"><i class="fas fa-volume-up"></i></span>
   </button>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const audio = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
-    const iconSpan = document.getElementById('music-icon');
-    let isMuted = false;
-    let hasStarted = false;
-
-    // Set initial volume
-    audio.volume = 0.15;
-
-    // Try to play music on first user interaction
-    function startMusic() {
-      if (!hasStarted) {
-        audio.play().catch(() => {}); // Ignore errors
-        hasStarted = true;
-      }
-    }
-    document.body.addEventListener('click', startMusic, { once: true });
-    document.body.addEventListener('touchstart', startMusic, { once: true });
-
-    // Toggle mute/unmute
-    toggleBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      isMuted = !isMuted;
-      audio.muted = isMuted;
-      iconSpan.innerHTML = isMuted
-        ? '<i class="fas fa-volume-mute"></i>'
-        : '<i class="fas fa-volume-up"></i>';
-    });
-
-    // Intersection Observer for fade-in animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.section').forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Countdown Timer
-    function updateCountdown() {
-      const weddingDate = new Date('2025-10-05T00:00:00');
-      const now = new Date();
-      const diff = weddingDate - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours;
-      document.getElementById('minutes').textContent = minutes;
-      document.getElementById('seconds').textContent = seconds;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Parallax effect for olive branch separators
-    window.addEventListener('scroll', function() {
-      document.querySelectorAll('.parallax-branch').forEach(function(img) {
-        // Get the image's parent divider position relative to viewport
-        var rect = img.parentElement.getBoundingClientRect();
-        // Calculate a parallax offset based on scroll position
-        var windowHeight = window.innerHeight;
-        var center = rect.top + rect.height / 2 - windowHeight / 2;
-        var offset = Math.max(-40, Math.min(40, center / 10)); // Clamp for subtle effect
-        img.style.transform = 'translateX(' + offset + 'px)';
-      });
-    });
-  });
-  </script>
 </body>
 </html>
