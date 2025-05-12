@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wedding Website</title>
+    <meta property="og:image" content="yosrAndAbdesslem-Photoroom.png" />
+    <title>Abdesslem & Yosr</title>
+    <link rel="icon" type="image/x-icon" href="android-chrome-192x192.png">
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -25,7 +27,7 @@
 
       body {
         background: #ffffff;
-      }
+      } 
       .rsvp-content {
         max-width: 800px;
         width: 100%;
@@ -34,6 +36,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
+        z-index: 10;
       }
 
       .rsvp-info {
@@ -60,14 +64,19 @@
         border-radius: 50px;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(42, 77, 47, 0.25);
-        transition: all 0.3s ease;
-        display: flex;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 12px;
         position: relative;
-        overflow: hidden;
         z-index: 100;
+        margin-bottom: 40px;
+        pointer-events: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
       }
 
       .rsvp-button:hover {
@@ -100,16 +109,18 @@
         -webkit-backdrop-filter: blur(5px);
         opacity: 0;
         transition: opacity 0.3s ease;
+        pointer-events: none;
       }
 
       .modal.show {
         opacity: 1;
+        pointer-events: auto;
       }
 
       .modal-content {
         background: #fff;
         margin: 5% auto;
-        padding: 30px;
+        padding: 60px 30px 30px 30px;
         border-radius: 15px;
         box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
         width: 80%;
@@ -117,7 +128,8 @@
         position: relative;
         transform: translateY(-50px);
         opacity: 0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2001;
       }
 
       .modal.show .modal-content {
@@ -134,29 +146,41 @@
         margin-bottom: 20px;
       }
 
-      .close-button {
+      .close-button,
+      .close-meme-button {
         position: absolute;
         top: 15px;
-        right: 20px;
+        right: 15px;
         color: #3a5d3f;
         font-size: 28px;
         font-weight: bold;
         cursor: pointer;
-        transition: color 0.2s;
+        transition: color 0.2s ease;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #fff;
+        z-index: 2002;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
-      .close-button:hover {
+      .close-button:hover,
+      .close-meme-button:hover {
         color: #2a4d2f;
+        background: rgba(42, 77, 47, 0.05);
       }
 
       .rsvp-form {
         border: none;
         border-radius: 10px;
         background: white;
-        pointer-events: auto;
-        position: relative;
-        z-index: 101;
         width: 100%;
+        height: 600px;
+        margin-top: 20px;
       }
 
       @media screen and (max-width: 768px) {
@@ -171,10 +195,11 @@
         .modal-content {
           width: 90%;
           padding: 20px;
+          margin: 10% auto;
         }
-
-        .modal-content h3 {
-          font-size: 1.5rem;
+        
+        .rsvp-form {
+          height: 500px;
         }
       }
 
@@ -187,19 +212,14 @@
           font-size: 1rem;
         }
 
-        .rsvp-button {
-          padding: 14px 28px;
-          font-size: 1rem;
-        }
-
         .modal-content {
           width: 95%;
           padding: 15px;
-          margin: 10% auto;
+          margin: 15% auto;
         }
-
-        .modal-content h3 {
-          font-size: 1.3rem;
+        
+        .rsvp-form {
+          height: 400px;
         }
       }
       .parallax {
@@ -1145,7 +1165,7 @@
       .olive-middle {
         position: absolute;
         opacity: 0.8;
-        z-index: 10;
+        z-index: 1;
         height: auto;
         transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
           transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1304,6 +1324,75 @@
         -webkit-line-clamp: unset;
         overflow: visible;
       }
+
+      .section#rsvp {
+        position: relative;
+        z-index: 5;
+        overflow: visible;
+      }
+
+      .tenor-gif-embed {
+        position: relative;
+        z-index: 2000;
+        margin-top: 20px;
+      }
+
+      /* Update meme modal content styles */
+      #yes-meme-modal .modal-content,
+      #no-meme-modal .modal-content {
+        padding-top: 80px;
+        text-align: center;
+      }
+
+      #yes-meme-modal h3,
+      #no-meme-modal h3 {
+        margin-bottom: 30px;
+      }
+
+      /* Add button styles */
+      .modal-button {
+        background: linear-gradient(135deg, #2a4d2f 0%, #4a7c4d 100%);
+        color: white;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding: 16px 32px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(42, 77, 47, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .modal-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(42, 77, 47, 0.35);
+        background: linear-gradient(135deg, #295c36 0%, #3a6c3d 100%);
+      }
+
+      .modal-button:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 8px rgba(42, 77, 47, 0.25);
+      }
+
+      .modal-button.no {
+        background: linear-gradient(135deg, #b97c5a 0%, #d4a17e 100%);
+        box-shadow: 0 4px 12px rgba(185, 124, 90, 0.25);
+      }
+
+      .modal-button.no:hover {
+        background: linear-gradient(135deg, #a86d4d 0%, #c3916e 100%);
+        box-shadow: 0 6px 18px rgba(185, 124, 90, 0.35);
+      }
+
+      .modal-button.no:active {
+        box-shadow: 0 2px 8px rgba(185, 124, 90, 0.25);
+      }
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -1430,33 +1519,106 @@
 
         // RSVP Modal Functionality
         const modal = document.getElementById("rsvp-modal");
+        const confirmModal = document.getElementById("confirm-modal");
+        const yesMemeModal = document.getElementById("yes-meme-modal");
+        const noMemeModal = document.getElementById("no-meme-modal");
         const rsvpBtn = document.getElementById("rsvp-button");
         const closeBtn = document.querySelector(".close-button");
+        const closeConfirmBtn = document.querySelector(".close-confirm-button");
+        const closeMemeBtn = document.querySelector(".close-meme-button");
+        const yesRsvpBtn = document.getElementById("yes-rsvp-btn");
+        const noRsvpBtn = document.getElementById("no-rsvp-btn");
 
-        rsvpBtn.addEventListener("click", function () {
+        // Open RSVP modal
+        rsvpBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
           modal.style.display = "block";
-          document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
-          setTimeout(() => {
+          document.body.style.overflow = "hidden";
+          requestAnimationFrame(() => {
             modal.classList.add("show");
-          }, 10);
+          });
         });
 
-        closeBtn.addEventListener("click", function () {
+        // When X is clicked on RSVP modal, show confirmation modal
+        closeBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
           modal.classList.remove("show");
           setTimeout(() => {
             modal.style.display = "none";
-            document.body.style.overflow = ""; // Re-enable scrolling
+            confirmModal.style.display = "block";
+            requestAnimationFrame(() => {
+              confirmModal.classList.add("show");
+            });
           }, 300);
         });
 
-        // Close modal if clicked outside of modal content
-        window.addEventListener("click", function (event) {
-          if (event.target === modal) {
-            modal.classList.remove("show");
+        // Handle Yes button click
+        yesRsvpBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          confirmModal.classList.remove("show");
+          setTimeout(() => {
+            confirmModal.style.display = "none";
+            yesMemeModal.style.display = "block";
+            requestAnimationFrame(() => {
+              yesMemeModal.classList.add("show");
+            });
+          }, 300);
+        });
+
+        // Handle No button click
+        noRsvpBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          confirmModal.classList.remove("show");
+          setTimeout(() => {
+            confirmModal.style.display = "none";
+            noMemeModal.style.display = "block";
+            requestAnimationFrame(() => {
+              noMemeModal.classList.add("show");
+            });
+          }, 300);
+        });
+
+        // Close confirmation modal
+        closeConfirmBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          confirmModal.classList.remove("show");
+          setTimeout(() => {
+            confirmModal.style.display = "none";
+            document.body.style.overflow = "";
+          }, 300);
+        });
+
+        // Close meme modals
+        document.querySelectorAll(".close-meme-button").forEach(btn => {
+          btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const memeModal = this.closest(".modal");
+            memeModal.classList.remove("show");
             setTimeout(() => {
-              modal.style.display = "none";
-              document.body.style.overflow = ""; // Re-enable scrolling
+              memeModal.style.display = "none";
+              document.body.style.overflow = "";
             }, 300);
+          });
+        });
+
+        // Prevent closing RSVP modal by clicking outside
+        modal.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        });
+
+        // Prevent closing RSVP modal with Escape key
+        window.addEventListener("keydown", function (event) {
+          if (modal.classList.contains("show") && event.key === "Escape") {
+            event.preventDefault();
           }
         });
 
@@ -1561,7 +1723,7 @@
           ones.
         </p>
         <p class="story-text">
-          Can’t wait to see you all soon, under the beautiful blue Tunisian sky
+          Can't wait to see you all soon, under the beautiful blue Tunisian sky
           and the olive branches.
         </p>
       </div>
@@ -1638,6 +1800,16 @@
           <p>
             <span class="fa-icon"><i class="fas fa-map-marker-alt"></i></span
             >Sidi Bou Ali, Tunisia
+          </p>
+          <p
+            style="
+              font-size: 1rem;
+              color: #6b8c6b;
+              margin-top: -10px;
+              margin-bottom: 10px;
+            "
+          >
+            <em>The house of the olive tree</em>
           </p>
           <p>
             Join us in this beautiful traditional Tunisian house for our special
@@ -1840,6 +2012,7 @@
         src="leftMiddle.png"
         class="olive-middle olive-middle-left"
         alt="Decorative olive left"
+        style="pointer-events: none;"
       />
       <h2>RSVP</h2>
       <div class="rsvp-content">
@@ -1849,7 +2022,7 @@
             Please let us know if you'll be joining us for our special day
           </p>
         </div>
-        <button id="rsvp-button" class="rsvp-button">
+        <button id="rsvp-button" class="rsvp-button" type="button" role="button" tabindex="0">
           <span>RSVP Now</span>
           <i class="fas fa-envelope"></i>
         </button>
@@ -1872,6 +2045,38 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content" style="max-width:500px;text-align:center;">
+        <span class="close-confirm-button">&times;</span>
+        <h3>Did you RSVP?</h3>
+        <div style="display:flex;justify-content:center;gap:20px;margin:30px 0;">
+          <button id="yes-rsvp-btn" class="modal-button">Yes</button>
+          <button id="no-rsvp-btn" class="modal-button no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yes Meme Modal -->
+    <div id="yes-meme-modal" class="modal">
+      <div class="modal-content" style="max-width:500px;text-align:center;">
+        <span class="close-meme-button">&times;</span>
+        <div class="tenor-gif-embed" data-postid="17126895" data-share-method="host" data-aspect-ratio="1.46789" data-width="100%"></div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <p style="margin-top:20px;font-size:1.2rem;color:#2a4d2f;">Thanks for RSVPing! 🎉</p>
+      </div>
+    </div>
+
+    <!-- No Meme Modal -->
+    <div id="no-meme-modal" class="modal">
+      <div class="modal-content" style="max-width:500px;text-align:center;">
+        <span class="close-meme-button">&times;</span>
+        <div class="tenor-gif-embed" data-postid="25352911" data-share-method="host" data-aspect-ratio="1" data-width="100%"></div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <p style="margin-top:20px;font-size:1.2rem;color:#b97c5a;">Please RSVP before leaving! 🙏</p>
       </div>
     </div>
 
