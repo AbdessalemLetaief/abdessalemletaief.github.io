@@ -982,13 +982,16 @@
       @media screen and (max-width: 480px) {
         .activity-card {
           min-height: 160px;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-radius: 22px;
         }
         .activity-image-container {
           min-height: 40px;
           max-height: 60px;
         }
         .activity-content {
-          padding: 8px 2px 6px 2px;
+          padding: 12px 8px 10px 8px;
         }
       }
 
@@ -1414,7 +1417,6 @@
         const noMemeModal = document.getElementById("no-meme-modal");
         const rsvpBtn = document.getElementById("rsvp-button");
         const closeBtn = document.querySelector(".close-button");
-        const closeConfirmBtn = document.querySelector(".close-confirm-button");
         const yesRsvpBtn = document.getElementById("yes-rsvp-btn");
         const noRsvpBtn = document.getElementById("no-rsvp-btn");
         const scrollTopBtn = document.getElementById("scrollTopBtn");
@@ -1557,8 +1559,55 @@
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
 
+        // Click outside modal - prevent for both confirmation and RSVP modals
+        document.querySelectorAll(".modal").forEach(modal => {
+          if (modal.id === "confirm-modal" || modal.id === "rsvp-modal") {
+            // Prevent clicks on the modal background for both confirmation and RSVP modals
+            modal.addEventListener("click", function(e) {
+              if (e.target === this) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+              }
+            });
+          } else {
+            modal.addEventListener("click", function(e) {
+              if (e.target === this) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeModal(this);
+              }
+            });
+          }
+        });
+
+        // Escape key - prevent for both confirmation and RSVP modals
+        window.addEventListener("keydown", function(event) {
+          if (event.key === "Escape") {
+            const confirmModal = document.getElementById("confirm-modal");
+            const rsvpModal = document.getElementById("rsvp-modal");
+            if ((confirmModal && confirmModal.classList.contains("show")) || 
+                (rsvpModal && rsvpModal.classList.contains("show"))) {
+              event.preventDefault();
+              event.stopPropagation();
+              return false;
+            }
+            
+            document.querySelectorAll(".modal.show").forEach(modal => {
+              if (modal.id !== "confirm-modal" && modal.id !== "rsvp-modal") {
+                closeModal(modal);
+              }
+            });
+          }
+        }, true);
+
         // Modal Functions
         function closeModal(modal) {
+          // Prevent closing confirmation and RSVP modals through this function
+          if (modal && (modal.id === "confirm-modal" || modal.id === "rsvp-modal")) {
+            return;
+          }
+          
           if (modal) {
             modal.classList.remove("show");
             setTimeout(() => {
@@ -1590,32 +1639,15 @@
           });
         });
 
-        // Click outside modal
-        document.querySelectorAll(".modal").forEach(modal => {
-          modal.addEventListener("click", function(e) {
-            if (e.target === this) {
-              e.preventDefault();
-              e.stopPropagation();
-              closeModal(this);
-            }
-          });
-        });
-
-        // Escape key
-        window.addEventListener("keydown", function(event) {
-          if (event.key === "Escape") {
-            document.querySelectorAll(".modal.show").forEach(modal => {
-              closeModal(modal);
-            });
-          }
-        });
-
-        // RSVP Modal Close
+        // RSVP Modal Close Button
         closeBtn.addEventListener("click", function (e) {
           e.preventDefault();
           e.stopPropagation();
-          closeModal(modal);
+          // Close RSVP modal directly
+          modal.classList.remove("show");
           setTimeout(() => {
+            modal.style.display = "none";
+            // Show confirmation modal
             confirmModal.style.display = "block";
             requestAnimationFrame(() => {
               confirmModal.classList.add("show");
@@ -1627,9 +1659,14 @@
         yesRsvpBtn.addEventListener("click", function(e) {
           e.preventDefault();
           e.stopPropagation();
-          closeModal(confirmModal);
+          // Close confirmation modal directly
+          confirmModal.classList.remove("show");
+          setTimeout(() => {
+            confirmModal.style.display = "none";
+            document.body.style.overflow = "";
+          }, 300);
           
-          // Trigger confetti
+          // Trigger confetti and show yes meme modal
           const duration = 3 * 1000;
           const animationEnd = Date.now() + duration;
           const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2003 };
@@ -1671,20 +1708,20 @@
         noRsvpBtn.addEventListener("click", function(e) {
           e.preventDefault();
           e.stopPropagation();
-          closeModal(confirmModal);
+          // Close confirmation modal directly
+          confirmModal.classList.remove("show");
+          setTimeout(() => {
+            confirmModal.style.display = "none";
+            document.body.style.overflow = "";
+          }, 300);
+          
+          // Show no meme modal
           setTimeout(() => {
             noMemeModal.style.display = "block";
             requestAnimationFrame(() => {
               noMemeModal.classList.add("show");
             });
           }, 300);
-        });
-
-        // Close Confirmation Modal
-        closeConfirmBtn.addEventListener("click", function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          closeModal(confirmModal);
         });
       });
     </script>
