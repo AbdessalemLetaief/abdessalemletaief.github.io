@@ -163,16 +163,16 @@
         .rsvp-content {
           padding: 15px;
         }
-        
+
         .rsvp-info p {
           font-size: 1.1rem;
         }
-        
+
         .modal-content {
           width: 90%;
           padding: 20px;
         }
-        
+
         .modal-content h3 {
           font-size: 1.5rem;
         }
@@ -182,22 +182,22 @@
         .rsvp-content {
           padding: 10px;
         }
-        
+
         .rsvp-info p {
           font-size: 1rem;
         }
-        
+
         .rsvp-button {
           padding: 14px 28px;
           font-size: 1rem;
         }
-        
+
         .modal-content {
           width: 95%;
           padding: 15px;
           margin: 10% auto;
         }
-        
+
         .modal-content h3 {
           font-size: 1.3rem;
         }
@@ -1237,11 +1237,11 @@
         .rsvp-content {
           padding: 15px;
         }
-        
+
         .rsvp-info p {
           font-size: 1.1rem;
         }
-        
+
         .rsvp-form-container {
           padding: 20px;
         }
@@ -1251,17 +1251,79 @@
         .rsvp-content {
           padding: 10px;
         }
-        
+
         .rsvp-info p {
           font-size: 1rem;
         }
-        
+
         .rsvp-form-container {
           padding: 15px;
         }
       }
+
+      .activity-card {
+        cursor: pointer;
+        transition: max-height 0.5s ease, box-shadow 0.3s ease;
+        max-height: 400px; /* Initial max height */
+        overflow: hidden;
+        position: relative;
+      }
+
+      .activity-card::after {
+        content: "Tap to read more";
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(42, 77, 47, 0.1);
+        color: #2a4d2f;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        transition: opacity 0.3s ease;
+      }
+
+      .activity-card.expanded {
+        max-height: 2000px; /* Large enough to show full content */
+      }
+
+      .activity-card.expanded::after {
+        opacity: 0;
+      }
+
+      .activity-question {
+        position: relative;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 3 lines initially */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: all 0.5s ease;
+      }
+
+      .activity-card.expanded .activity-question {
+        -webkit-line-clamp: unset;
+        overflow: visible;
+      }
     </style>
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const activityCards = document.querySelectorAll(".activity-card");
+
+        activityCards.forEach((card) => {
+          card.addEventListener("click", function () {
+            // Toggle expanded class
+            this.classList.toggle("expanded");
+
+            // Optional: Scroll to make the full card visible
+            if (this.classList.contains("expanded")) {
+              this.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+              });
+            }
+          });
+        });
+      });
       document.addEventListener("DOMContentLoaded", function () {
         const audio = document.getElementById("bg-music");
         const toggleBtn = document.getElementById("music-toggle");
@@ -1345,8 +1407,8 @@
           });
         });
 
-       // Scroll to Top Button
-       const scrollTopBtn = document.getElementById("scrollTopBtn");
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
         const landing = document.getElementById("home");
 
         function checkScrollBtn() {
@@ -1365,30 +1427,30 @@
         scrollTopBtn.addEventListener("click", function () {
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
-        
+
         // RSVP Modal Functionality
         const modal = document.getElementById("rsvp-modal");
         const rsvpBtn = document.getElementById("rsvp-button");
         const closeBtn = document.querySelector(".close-button");
-        
-        rsvpBtn.addEventListener("click", function() {
+
+        rsvpBtn.addEventListener("click", function () {
           modal.style.display = "block";
           document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
           setTimeout(() => {
             modal.classList.add("show");
           }, 10);
         });
-        
-        closeBtn.addEventListener("click", function() {
+
+        closeBtn.addEventListener("click", function () {
           modal.classList.remove("show");
           setTimeout(() => {
             modal.style.display = "none";
             document.body.style.overflow = ""; // Re-enable scrolling
           }, 300);
         });
-        
+
         // Close modal if clicked outside of modal content
-        window.addEventListener("click", function(event) {
+        window.addEventListener("click", function (event) {
           if (event.target === modal) {
             modal.classList.remove("show");
             setTimeout(() => {
@@ -1483,9 +1545,8 @@
         <p class="story-text">
           On a university bench, years ago, a love story blossomed between two
           people who were not looking for each other. <br />
-          But the universe works in magical ways and these two were bewitched
-          body and soul. They have been on a beautiful journey of life, laughter
-          and most importantly, love.
+          But the universe works in magical ways and they have been on a
+          beautiful journey of life, laughter and most importantly, love.
         </p>
         <p class="story-text">
           These two are us. Through the many challenges, the distance and the
@@ -1495,13 +1556,13 @@
         </p>
         <p class="story-text">
           Though we kept our love private for so long, we are ready now to share
-          it with you, our family and friends.<br />We are thrilled to begin our
-          next chapter of our lives and celebrate this special moment with our
-          loved ones.
+          it with you, our family and friends. We are thrilled to begin the next
+          chapter of our lives and celebrate this special moment with our loved
+          ones.
         </p>
         <p class="story-text">
-          Can't wait to see you all soon, under the beautiful blue tunisian sky
-          and between the olive trees..
+          Can’t wait to see you all soon, under the beautiful blue Tunisian sky
+          and the olive branches.
         </p>
       </div>
     </div>
@@ -1630,11 +1691,13 @@
           <div class="activity-content">
             <h3>Ancient Ruins</h3>
             <p class="activity-question">
-              Every corner in Tunisia is hiding an ancient site. Visit the ruins of Carthage, where the stones tell the story of bygone eras and myths of Hannibal and Elissa. And don't forget to see the Ancient Amphitheater of El Jem, and the UNESCO world Heritage of site of Dougga
+              Every corner in Tunisia is hiding an ancient site. Visit the ruins
+              of Carthage, where the stones tell the story of bygone eras and
+              myths of Hannibal and Elissa. And don't forget to see the Ancient
+              Amphitheater of El Jem, and the UNESCO world Heritage of site of
+              Dougga
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
         <div class="activity-card" tabindex="0">
@@ -1648,11 +1711,15 @@
           <div class="activity-content">
             <h3>The Medinas</h3>
             <p class="activity-question">
-              Almost every city in Tunisia has its own fort and its Medina Arbi, old city. Mazes of narrow alleys will take through hundreds of years of history protected between the walls of the medinas. Mosques, souks, shops, souvenirs shop, jewellery, restaurants and cafes merge together to create the Charm of Medina. While Tounes, the capital, has the biggest one, Sousse, Nabel, Monastir Mahdia, Tozeur all flaunt rivaling medinas with their own special touch.
+              Almost every city in Tunisia has its own fort and its Medina Arbi,
+              old city. Mazes of narrow alleys will take through hundreds of
+              years of history protected between the walls of the medinas.
+              Mosques, souks, shops, souvenirs shop, jewellery, restaurants and
+              cafes merge together to create the Charm of Medina. While Tounes,
+              the capital, has the biggest one, Sousse, Nabel, Monastir Mahdia,
+              Tozeur all flaunt rivaling medinas with their own special touch.
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
         <div class="activity-card" tabindex="0">
@@ -1666,13 +1733,19 @@
           <div class="activity-content">
             <h3>Beach Paradise</h3>
             <p class="activity-question">
-              With 1,148 Kilometers of coastal shores, the options of beautiful beaches are endless. The golden sand and the crystal blue waters extend as far as you can see and merge into the blue skies of Tunisia.
-              Everyday is a good day to sunbathe from April to October. Don't forget your sunscreen though.
-              From north to South, every city has multiple picture perfect beaches, Sousse and Monastir and MAhdia offer less crowded beaches and especially suitable for those who want to relax. For those who dont mind rocky beaches Al huwarya and Klebia, two smaller cities within Nabel, have stunning rocky beaches. They are also well known for diving, Kayaking and boat trips.
+              With 1,148 Kilometers of coastal shores, the options of beautiful
+              beaches are endless. The golden sand and the crystal blue waters
+              extend as far as you can see and merge into the blue skies of
+              Tunisia. Everyday is a good day to sunbathe from April to October.
+              Don't forget your sunscreen though. From north to South, every
+              city has multiple picture perfect beaches, Sousse and Monastir and
+              MAhdia offer less crowded beaches and especially suitable for
+              those who want to relax. For those who dont mind rocky beaches Al
+              huwarya and Klebia, two smaller cities within Nabel, have stunning
+              rocky beaches. They are also well known for diving, Kayaking and
+              boat trips.
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
         <div class="activity-card" tabindex="0">
@@ -1686,12 +1759,18 @@
           <div class="activity-content">
             <h3>Desert Adventure</h3>
             <p class="activity-question">
-              The south part of Tunisia is the entry to the Sahara Desert. Continuous dunes bejeweled with Oasis are only 4 hours away from Tunis. Whether you want to enjoy the desert landscapes, visit the Canyon of Mides or swim in the Chebika Oasis, Tozeur is your starting point. From there you visit MAtmata, a fascinating BErber village made of houses built within the ground. An architecture and a way of loving that highlights the ingenious life of the Berber. Matmata is also where Star wars was filmed.
-              The south goes much further south and Gabes, Tataouine, Jerba have a lot more to offer
+              The south part of Tunisia is the entry to the Sahara Desert.
+              Continuous dunes bejeweled with Oasis are only 4 hours away from
+              Tunis. Whether you want to enjoy the desert landscapes, visit the
+              Canyon of Mides or swim in the Chebika Oasis, Tozeur is your
+              starting point. From there you visit MAtmata, a fascinating BErber
+              village made of houses built within the ground. An architecture
+              and a way of loving that highlights the ingenious life of the
+              Berber. Matmata is also where Star wars was filmed. The south goes
+              much further south and Gabes, Tataouine, Jerba have a lot more to
+              offer
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
         <div class="activity-card" tabindex="0">
@@ -1705,12 +1784,19 @@
           <div class="activity-content">
             <h3>Local Cuisine</h3>
             <p class="activity-question">
-              If you are a foodie, you will indulge in authentic Tunisia cuisine. While couscous is the most well known dish, the selection of dishes that each region offers will leave salivating. The Mediterranean Sea provides the freshest seafood you can have, our favourite is octopus and Calamari (stuffed ones, fantastic!). PAsta is also a favourite amongst locals but watch out for the spice, or better, work on it when you are visiting. If you are into street food then don't forget to try Chapati, Mlewi, fricassee and Bambalouni.
-              Remember to start your day with a Capucin and to finish every meal with the famous mint tea and the local pastries.
+              If you are a foodie, you will indulge in authentic Tunisia
+              cuisine. While couscous is the most well known dish, the selection
+              of dishes that each region offers will leave salivating. The
+              Mediterranean Sea provides the freshest seafood you can have, our
+              favourite is octopus and Calamari (stuffed ones, fantastic!).
+              PAsta is also a favourite amongst locals but watch out for the
+              spice, or better, work on it when you are visiting. If you are
+              into street food then don't forget to try Chapati, Mlewi,
+              fricassee and Bambalouni. Remember to start your day with a
+              Capucin and to finish every meal with the famous mint tea and the
+              local pastries.
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
         <div class="activity-card" tabindex="0">
@@ -1724,11 +1810,18 @@
           <div class="activity-content">
             <h3>Resort Hotels</h3>
             <p class="activity-question">
-              Tunisia offers a wide range of luxury resort hotels along its stunning coastline. From all-inclusive beachfront resorts in Hammamet and Sousse to boutique hotels in Monastir and Mahdia, you'll find accommodations to suit every preference. Many resorts feature private beaches, multiple swimming pools, spa facilities, and a variety of dining options. Whether you're looking for a family-friendly resort with water parks or a romantic adults-only retreat, Tunisia's hospitality industry ensures a comfortable and memorable stay with its blend of modern amenities and traditional Tunisian charm.
+              Tunisia offers a wide range of luxury resort hotels along its
+              stunning coastline. From all-inclusive beachfront resorts in
+              Hammamet and Sousse to boutique hotels in Monastir and Mahdia,
+              you'll find accommodations to suit every preference. Many resorts
+              feature private beaches, multiple swimming pools, spa facilities,
+              and a variety of dining options. Whether you're looking for a
+              family-friendly resort with water parks or a romantic adults-only
+              retreat, Tunisia's hospitality industry ensures a comfortable and
+              memorable stay with its blend of modern amenities and traditional
+              Tunisian charm.
             </p>
-            <div class="activity-answer">
-              
-            </div>
+            <div class="activity-answer"></div>
           </div>
         </div>
       </div>
@@ -1752,7 +1845,9 @@
       <div class="rsvp-content">
         <div class="rsvp-info">
           <p>We can't wait to celebrate with you!</p>
-          <p style="font-size: 1rem; margin-top: 20px;">Please let us know if you'll be joining us for our special day</p>
+          <p style="font-size: 1rem; margin-top: 20px">
+            Please let us know if you'll be joining us for our special day
+          </p>
         </div>
         <button id="rsvp-button" class="rsvp-button">
           <span>RSVP Now</span>
@@ -1760,7 +1855,7 @@
         </button>
       </div>
     </div>
-    
+
     <!-- RSVP Modal -->
     <div id="rsvp-modal" class="modal">
       <div class="modal-content">
